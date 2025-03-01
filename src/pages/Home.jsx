@@ -1,8 +1,20 @@
+import Carousel from "../components/Carousel";
+import Footer from "../components/Footer";
+import MarqueeText from "../components/MarqueeText";
+import Navbar from "../components/Navbar";
+import Row from "../components/Row";
+import SevenCategories from "../components/SevenCategories";
+
 const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <>
+      <Navbar />
+      <Carousel />
+      <MarqueeText />
+      <Row />
+      <SevenCategories />
+      <Footer />
+    </>
   );
 };
 

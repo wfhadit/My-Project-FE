@@ -1,3 +1,4 @@
+import Cart from "../pages/Cart";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Product from "../pages/Product";
@@ -24,5 +25,9 @@ export const routes = [
   {
     path: "/product",
     element: <Product />,
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
   },
 ];

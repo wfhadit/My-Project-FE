@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
 const Row = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <br />
@@ -17,7 +20,12 @@ const Row = () => {
           <div className="col ratio ratio-1x1">
             <div className="top-50 text-white text-center z-1">
               <p className="fw-bold">Audio Berkualitas</p>
-              <button className="btn btn-danger">Lihat Detail</button>
+              <button
+                className="btn btn-danger"
+                onClick={() => navigate("/product")}
+              >
+                Lihat Detail
+              </button>
             </div>
             <img
               src="https://www.audeze.com/cdn/shop/files/HomeBanner_2000x.png?v=1727447236"

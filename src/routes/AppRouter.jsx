@@ -2,6 +2,7 @@ import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import Payment from "../pages/Payment";
 import Product from "../pages/Product";
 import Profile from "../pages/Profile";
 import Register from "../pages/Register";
@@ -39,5 +40,9 @@ export const routes = [
   {
     path: "/checkout",
     element: <Checkout />,
+  },
+  {
+    path: "/payment",
+    element: <Payment />,
   },
 ];

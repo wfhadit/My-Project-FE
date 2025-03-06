@@ -1,4 +1,5 @@
 import Cart from "../pages/Cart";
+import Checkout from "../pages/Checkout";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Product from "../pages/Product";
@@ -34,5 +35,9 @@ export const routes = [
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path: "/checkout",
+    element: <Checkout />,
   },
 ];

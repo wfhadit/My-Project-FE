@@ -1,4 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-black ">
       <div className="container-fluid">
@@ -41,8 +50,12 @@ const Navbar = () => {
               placeholder="Search"
               aria-label="Search"
             />
-            <button className="btn btn-outline-danger" type="submit">
-              Search
+            <button
+              className="btn btn-outline-danger"
+              type="submit"
+              onClick={handleLogout}
+            >
+              Logout
             </button>
           </form>
         </div>

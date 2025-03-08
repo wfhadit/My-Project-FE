@@ -1,37 +1,34 @@
 import { useNavigate } from "react-router-dom";
-import { register } from "../api/auth";
 import Logo from "../assets/Untitled-9.svg";
 import { useState } from "react";
+import { api } from "../api/axios";
+import { useFormik } from "formik";
+import { constant } from "../constant";
 
 const Register = () => {
-  const [form, setForm] = useState({
-    nama: "",
-    email: "",
-    password: "",
-  });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const nav = useNavigate();
+  const formik = useFormik({
+    initialValues: {
+      nama: "",
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      const res = await api
+        .post("/register", values)
+        .then(() => constant.success)
+        .catch((err) => err.message);
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const data = await register(form);
-      console.log(data);
-      setLoading(true);
-      setTimeout(() => {
-        navigate("/login");
-      }, 1000);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      console.log(res);
+      if (res === constant.success) {
+        setLoading(true);
+        setTimeout(() => {
+          nav("/login");
+        }, 1000);
+      }
+    },
+  });
 
   return (
     <div className="container col-xl-10 col-xxl-8 px-4 py-2">
@@ -42,7 +39,7 @@ const Register = () => {
         <div className="col-md-10 mx-auto col-lg-5">
           <form
             className="p-4 p-md-5 border rounded-3 bg-body-tertiary"
-            onSubmit={handleSubmit}
+            onSubmit={formik.handleSubmit}
           >
             <div className="form-floating mb-3">
               <input
@@ -51,8 +48,7 @@ const Register = () => {
                 id="floatingText"
                 placeholder="nama"
                 name="nama"
-                value={form.nama}
-                onChange={handleChange}
+                onChange={(e) => formik.setFieldValue("nama", e.target.value)}
               />
               <label htmlFor="floatingText">Nama</label>
             </div>
@@ -63,8 +59,7 @@ const Register = () => {
                 id="floatingInput"
                 placeholder="name@example.com"
                 name="email"
-                value={form.email}
-                onChange={handleChange}
+                onChange={(e) => formik.setFieldValue("email", e.target.value)}
               />
               <label htmlFor="floatingInput">Email</label>
             </div>
@@ -75,8 +70,9 @@ const Register = () => {
                 id="floatingPassword"
                 placeholder="Password"
                 name="password"
-                value={form.password}
-                onChange={handleChange}
+                onChange={(e) =>
+                  formik.setFieldValue("password", e.target.value)
+                }
               />
               <label htmlFor="floatingPassword">Password</label>
             </div>

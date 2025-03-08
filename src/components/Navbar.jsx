@@ -1,12 +1,10 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { UserLogout } from "../redux/middlewares/auth-middleware";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
+  const dispatch = useDispatch();
 
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-black ">
@@ -53,7 +51,10 @@ const Navbar = () => {
             <button
               className="btn btn-outline-danger"
               type="submit"
-              onClick={handleLogout}
+              onClick={async () => {
+                await dispatch(UserLogout());
+                navigate("/login");
+              }}
             >
               Logout
             </button>

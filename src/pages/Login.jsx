@@ -1,41 +1,30 @@
 import { useNavigate } from "react-router-dom";
-import { login } from "../api/auth";
 import Logo from "../assets/Untitled-9.svg";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { UserLogin } from "../redux/middlewares/auth-middleware";
+import { constant } from "../constant";
+import { useFormik } from "formik";
 const Login = () => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
-
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await login(form);
-      const token = response.data.token;
-      if (token) {
-        localStorage.setItem("token", token);
-
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      const result = await dispatch(UserLogin(values));
+      if (result === constant.success) {
         setLoading(true);
         setTimeout(() => {
           navigate("/");
         }, 1000);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      console.log(result);
+    },
+  });
 
   return (
     <div className="container col-xl-10 col-xxl-8 px-4 py-5">
@@ -46,7 +35,7 @@ const Login = () => {
         <div className="col-md-10 mx-auto col-lg-5">
           <form
             className="p-4 p-md-5 border rounded-3 bg-body-tertiary"
-            onSubmit={handleSubmit}
+            onSubmit={formik.handleSubmit}
           >
             <div className="form-floating mb-3">
               <input
@@ -54,9 +43,7 @@ const Login = () => {
                 className="form-control"
                 id="floatingInput"
                 placeholder="name@example.com"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
+                onChange={(e) => formik.setFieldValue("email", e.target.value)}
               />
               <label htmlFor="floatingInput">Email</label>
             </div>
@@ -66,9 +53,9 @@ const Login = () => {
                 className="form-control"
                 id="floatingPassword"
                 placeholder="Password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
+                onChange={(e) =>
+                  formik.setFieldValue("password", e.target.value)
+                }
               />
               <label htmlFor="floatingPassword">Password</label>
             </div>

@@ -1,15 +1,21 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UserLogout } from "../redux/middlewares/auth-middleware";
+import { IoCartOutline } from "react-icons/io5";
+import { CiSearch } from "react-icons/ci";
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  const nav = useNavigate();
   const dispatch = useDispatch();
-
+  const userSelector = useSelector((state) => state.auth);
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-black ">
       <div className="container-fluid">
-        <a href="#" className="navbar-brand">
+        <a
+          className="navbar-brand"
+          onClick={() => nav("/")}
+          style={{ cursor: "pointer" }}
+        >
           Toko Lama
         </a>
         <button
@@ -24,41 +30,139 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="navbar-collapse collapse" id="navbarCollapse">
-          <ul className="navbar-nav me-auto mb-2 mb-md-0">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Home
+          <ul className="navbar-nav mb-2 mb-md-0">
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link active dropdown-toggle"
+                aria-current="page"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Brands
               </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" aria-disabled="true">
-                Disabled
-              </a>
+              <ul className="dropdown-menu bg-black">
+                <li>
+                  <a
+                    className="dropdown-item text-danger"
+                    onClick={() => nav("/search")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    HyperX
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item text-danger"
+                    onClick={() => nav("/search")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    LogitechG
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item text-danger"
+                    onClick={() => nav("/search")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    SteelSeries
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item text-danger"
+                    onClick={() => nav("/search")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Corsair
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item text-danger"
+                    onClick={() => nav("/search")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Asus
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item text-danger"
+                    onClick={() => nav("/search")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Secretlab
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item text-danger"
+                    onClick={() => nav("/search")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Audeze
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item text-danger"
+                    onClick={() => nav("/search")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Cooler Master
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
+          <form className="container-fluid" role="search">
+            <div className="input-group ">
+              <span className="input-group-text">
+                <CiSearch size={20} />
+              </span>
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+            </div>
+          </form>
+          <IoCartOutline
+            size={50}
+            color="white"
+            onClick={() => nav("/cart")}
+            className=" me-5"
+          />
+          {userSelector.id ? (
             <button
               className="btn btn-outline-danger"
               type="submit"
               onClick={async () => {
                 await dispatch(UserLogout());
-                navigate("/login");
+                nav("/login");
               }}
             >
               Logout
             </button>
-          </form>
+          ) : (
+            <>
+              <button
+                className="btn btn-outline-danger me-2"
+                onClick={() => nav("/login")}
+              >
+                Login
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => nav("/register")}
+              >
+                Register
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>

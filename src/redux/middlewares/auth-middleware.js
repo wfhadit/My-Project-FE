@@ -6,7 +6,7 @@ export const UserLogin = (values) => {
     try {
       const res = await api.post("/login", { ...values });
 
-      const user = res.data.user;
+      const user = res.data.data;
       localStorage.setItem("auth", res.data.data.token);
       dispatch({ type: constant.USER_LOGIN, payload: user });
 

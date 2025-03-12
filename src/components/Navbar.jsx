@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { UserLogout } from "../redux/middlewares/auth-middleware";
 import { IoCartOutline } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
+import { TbLogout } from "react-icons/tb";
 
 const Navbar = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const userSelector = useSelector((state) => state.auth);
+  console.log(userSelector);
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-black ">
       <div className="container-fluid">
@@ -130,23 +132,59 @@ const Navbar = () => {
               />
             </div>
           </form>
-          <IoCartOutline
-            size={50}
-            color="white"
-            onClick={() => nav("/cart")}
-            className=" me-5"
-          />
+          <ul className="navbar-nav mb-2 mb-md-0 ">
+            <li className="nav-item dropstart mx-auto">
+              <IoCartOutline
+                size={40}
+                color="white"
+                onClick={() => nav("/cart")}
+                className=" me-3"
+              />
+            </li>
+          </ul>
           {userSelector.id ? (
-            <button
-              className="btn btn-outline-danger"
-              type="submit"
-              onClick={async () => {
-                await dispatch(UserLogout());
-                nav("/login");
-              }}
-            >
-              Logout
-            </button>
+            <>
+              <ul className="navbar-nav mb-2 mb-md-0 ">
+                <li className="nav-item dropstart mx-auto">
+                  <a
+                    className="nav-link active dropdown "
+                    aria-current="page"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      src={userSelector.foto}
+                      alt="profile-picture"
+                      className="rounded-circle me-1"
+                      width="40"
+                      height="40"
+                    />
+                  </a>
+                  <ul className="dropdown-menu bg-black">
+                    <li>
+                      <a
+                        className="dropdown-item text-danger"
+                        onClick={() => nav("/profile")}
+                      >
+                        Profile
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="dropdown-item text-danger"
+                        onClick={async () => {
+                          await dispatch(UserLogout());
+                          nav("/login");
+                        }}
+                      >
+                        <TbLogout size={25} color="red" /> Logout
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </>
           ) : (
             <>
               <button

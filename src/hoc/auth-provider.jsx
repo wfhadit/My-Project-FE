@@ -17,9 +17,9 @@ export const AuthProvider = ({ children }) => {
       .then((res) => {
         dispatch({
           type: constant.USER_LOGIN,
-          payload: res.data.data,
+          payload: res.data.user,
         });
-        localStorage.setItem("auth", res.data.data.token);
+        localStorage.setItem("auth", res.data.token);
       })
       .catch((err) => {
         console.log(err);

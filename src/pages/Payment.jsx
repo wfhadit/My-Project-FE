@@ -14,9 +14,9 @@ const Payment = () => {
         <h6>Batas Akhir Pembayaran</h6>
         <h5>Jumat, 7 Maret 2025 15:39</h5>
         <br />
-        <div className="row">
-          <div className="col-3"></div>
-          <div className="col-6">
+        <div className="row" data-masonry='{"percentPosition": true }'>
+          <div className="col-lg-3 col-sm-4"></div>
+          <div className="col-lg-6 col-sm-4">
             <div className="card ">
               <div className="card-body">
                 <div className="card-title text-start">BCA Virtual Account</div>
@@ -48,9 +48,9 @@ const Payment = () => {
           </div>
         </div>
         <br />
-        <div className="row">
-          <div className="col-3"></div>
-          <div className="col-6">
+        <div className="row" data-masonry='{"percentPosition": true }'>
+          <div className="col-lg-3 col-sm-4"></div>
+          <div className="col-lg-6 col-sm-4">
             <div className="card">
               <div className="card-body text-start">
                 <div className="card-title ">Cara Pembayaran</div>

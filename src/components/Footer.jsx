@@ -4,7 +4,6 @@ const Footer = () => {
   return (
     <>
       <br />
-      <br />
       <div className="container-fluid bg-black px-5 text-white">
         <footer className="py-5">
           <div className="row">

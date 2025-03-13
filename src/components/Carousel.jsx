@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 const Carousel = () => {
+  const nav = useNavigate();
   return (
     <div
       id="myCarousel"
@@ -32,24 +35,23 @@ const Carousel = () => {
       <div className="carousel-inner">
         <div className="carousel-item active">
           <div className="ratio ratio-21x9">
-            <img src="https://dlcdnwebimgs.asus.com/gain/CC1A1C6D-5B76-4664-80FE-4F32B38A8105/fwebp" />
+            <img src="https://res.cloudinary.com/dvehysudh/image/upload/ecommerce/fwebp_i30aqb.webp" />
           </div>
         </div>
         <div className="carousel-item active">
           <div className="ratio ratio-21x9">
-            <img src="https://a.storyblok.com/f/281110/1920x1070/c8c75bb1ba/2-mm730-image.jpg" />
+            <img src="https://res.cloudinary.com/dvehysudh/image/upload/ecommerce/coolermaster_evejzf.jpg" />
           </div>
 
           <div className="container">
             <div className="carousel-caption">
-              <h1>Another example headline.</h1>
+              <h1>MM730 GAMING MOUSE</h1>
               <p>
-                Some representative placeholder content for the second slide of
-                the carousel.
-              </p>
-              <p>
-                <a href="#" className="btn btn-lg btn-danger">
-                  Learn more
+                <a
+                  className="btn btn-lg btn-danger btn-sm"
+                  onClick={() => nav("/product")}
+                >
+                  Cek Produk
                 </a>
               </p>
             </div>
@@ -57,19 +59,19 @@ const Carousel = () => {
         </div>
         <div className="carousel-item active">
           <div className="ratio ratio-21x9">
-            <img src="https://assets.corsair.com/image/upload/f_auto,q_auto/pages/keyboard-lp/Keyboard_Category_K70PRO.png" />
+            <img src="https://res.cloudinary.com/dvehysudh/image/upload/ecommerce/Keyboard_Category_K70PRO_pysql6.jpg" />
           </div>
 
           <div className="container">
             <div className="carousel-caption text-end">
-              <h1>One more for good measure</h1>
+              <h2>K70 PRO TKL</h2>
+              <p>Keyboard mechanical premium</p>
               <p>
-                Some representative placeholder content for the third slide of
-                this carousel
-              </p>
-              <p>
-                <a href="#" className="btn btn-lg btn-danger">
-                  Browse gallery
+                <a
+                  onClick={() => nav("/product")}
+                  className="btn btn-lg btn-danger btn-sm"
+                >
+                  Pelajari
                 </a>
               </p>
             </div>

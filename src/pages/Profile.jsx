@@ -32,8 +32,8 @@ const Profile = () => {
       <br />
       <br />
       <div className="container p-5">
-        <div className="row">
-          <div className="col-2">
+        <div className="row" data-masonry='{"percentPosition": true }'>
+          <div className="col-sm-6 col-lg-2 col-md-4 mb-4">
             <div className="card text-center">
               <div className="p-2">
                 <img
@@ -66,7 +66,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="col-5">
+          <div className="col-sm-4 col-lg-5 col-md-4 mb-4">
             <div className="card">
               <div className="card-body">
                 <p>
@@ -300,7 +300,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="col-5">
+          <div className="col-sm-6 col-lg-5 col-md-4 mb-4">
             <div className="card">
               <div className="card-body">
                 <p>

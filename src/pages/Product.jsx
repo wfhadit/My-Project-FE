@@ -1,9 +1,26 @@
+import { useParams } from "react-router-dom";
+import { api } from "../api/axios";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Product = () => {
   const [count, setCount] = useState(0);
+  const [product, setProduct] = useState({});
+  const params = useParams();
+  const fetchProduct = () => {
+    api
+      .get("/product/" + params.productID)
+      .then((res) => {
+        setProduct(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    fetchProduct();
+  }, []);
   return (
     <>
       <Navbar />
@@ -12,22 +29,13 @@ const Product = () => {
       <div className="container pt-5 px-5">
         <div className="row">
           <div className="col p-2">
-            <img
-              src="https://images.tokopedia.net/img/cache/700/VqbcmM/2024/10/2/e2912df8-0168-4eaf-80d3-fe5d7c2073ca.png.webp?ect=4g&quo"
-              alt=""
-              className="img-thumbnail "
-            />
+            <img src={product.image} alt="" className="img-thumbnail " />
           </div>
           <div className="col  p-3 ">
-            <h5>Aerox 9</h5>
-            <h6>SteelSeries</h6>
-            <h6 className="text-danger">Rp. 1.500.000</h6>
-            <p style={{ textAlign: "justify" }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            </p>
+            <h5>{product.nama}</h5>
+            <h6>{product.brand}</h6>
+            <h6 className="text-danger">Rp. {product.price}</h6>
+            <p style={{ textAlign: "justify" }}>{product.description}</p>
           </div>
           <div className="col  p-5">
             <div className="card mb-3 p-2" style={{ width: "17rem" }}>
@@ -52,14 +60,18 @@ const Product = () => {
                   <button
                     type="button"
                     className="btn btn-danger"
-                    onClick={() => setCount(count + 1)}
+                    onClick={() =>
+                      setCount((x) => (x < product.amount ? x + 1 : x))
+                    }
+                    disabled={count === product.amount}
                   >
                     +
                   </button>
                 </div>
-                <span className="ps-3">Stok : 14</span>
+                <span className="ps-3">Stok : {product.amount}</span>
                 <p className="card-text pt-3">
-                  Subtotal: <span className="ps-3">Rp. {count * 1500000}</span>
+                  Subtotal:
+                  <span className="ps-3">Rp. {count * product.price}</span>
                 </p>
                 <button type="button" className="btn btn-danger">
                   Tambahkan ke Keranjang

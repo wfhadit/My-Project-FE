@@ -26,7 +26,7 @@ export const routes = [
     element: <Search />,
   },
   {
-    path: "/product",
+    path: "/product/:productID",
     element: <Product />,
   },
   {

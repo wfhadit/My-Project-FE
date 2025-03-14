@@ -9,6 +9,9 @@ const Navbar = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const userSelector = useSelector((state) => state.auth);
+  const handlebrand = (brand) => {
+    nav(`/search?Brand=${brand}`);
+  };
   console.log(userSelector);
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-black ">
@@ -47,7 +50,7 @@ const Navbar = () => {
                 <li>
                   <a
                     className="dropdown-item text-danger"
-                    onClick={() => nav("/search")}
+                    onClick={() => handlebrand("HyperX")}
                     style={{ cursor: "pointer" }}
                   >
                     HyperX
@@ -56,7 +59,7 @@ const Navbar = () => {
                 <li>
                   <a
                     className="dropdown-item text-danger"
-                    onClick={() => nav("/search")}
+                    onClick={() => handlebrand("LogitechG")}
                     style={{ cursor: "pointer" }}
                   >
                     LogitechG
@@ -65,7 +68,7 @@ const Navbar = () => {
                 <li>
                   <a
                     className="dropdown-item text-danger"
-                    onClick={() => nav("/search")}
+                    onClick={() => handlebrand("SteelSeries")}
                     style={{ cursor: "pointer" }}
                   >
                     SteelSeries
@@ -74,7 +77,7 @@ const Navbar = () => {
                 <li>
                   <a
                     className="dropdown-item text-danger"
-                    onClick={() => nav("/search")}
+                    onClick={() => handlebrand("Corsair")}
                     style={{ cursor: "pointer" }}
                   >
                     Corsair
@@ -83,7 +86,7 @@ const Navbar = () => {
                 <li>
                   <a
                     className="dropdown-item text-danger"
-                    onClick={() => nav("/search")}
+                    onClick={() => handlebrand("Asus")}
                     style={{ cursor: "pointer" }}
                   >
                     Asus
@@ -92,7 +95,7 @@ const Navbar = () => {
                 <li>
                   <a
                     className="dropdown-item text-danger"
-                    onClick={() => nav("/search")}
+                    onClick={() => handlebrand("SecretLab")}
                     style={{ cursor: "pointer" }}
                   >
                     Secretlab
@@ -101,7 +104,7 @@ const Navbar = () => {
                 <li>
                   <a
                     className="dropdown-item text-danger"
-                    onClick={() => nav("/search")}
+                    onClick={() => handlebrand("Audeze")}
                     style={{ cursor: "pointer" }}
                   >
                     Audeze
@@ -110,7 +113,7 @@ const Navbar = () => {
                 <li>
                   <a
                     className="dropdown-item text-danger"
-                    onClick={() => nav("/search")}
+                    onClick={() => handlebrand("CoolerMaster")}
                     style={{ cursor: "pointer" }}
                   >
                     Cooler Master
@@ -129,6 +132,14 @@ const Navbar = () => {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                name="Search"
+                autoComplete="on"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); // Supaya form tidak reload
+                    nav(`/search?q=${e.target.value}`);
+                  }
+                }}
               />
             </div>
           </form>

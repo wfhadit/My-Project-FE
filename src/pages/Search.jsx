@@ -2,8 +2,23 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { MdSkipPrevious } from "react-icons/md";
 import { MdSkipNext } from "react-icons/md";
+import { useSearchParams } from "react-router-dom";
 
 const Search = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleFilterChange = (key, value) => {
+    const params = new URLSearchParams(searchParams);
+
+    // Jika parameter sudah ada, hapus
+    if (params.get(key) === value) {
+      params.delete(key);
+    } else {
+      params.set(key, value);
+    }
+
+    setSearchParams(params);
+  };
   return (
     <>
       <Navbar />
@@ -19,6 +34,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="kursi"
+                checked={searchParams.get("Category") === "Kursi"}
+                onChange={() => handleFilterChange("Category", "Kursi")}
               />
               <label className="form-check-label" htmlFor="kursi">
                 Kursi
@@ -30,6 +47,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="mouse"
+                checked={searchParams.get("Category") === "Mouse"}
+                onChange={() => handleFilterChange("Category", "Mouse")}
               />
               <label className="form-check-label" htmlFor="mouse">
                 Mouse
@@ -41,6 +60,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="keyboard"
+                checked={searchParams.get("Category") === "Keyboard"}
+                onChange={() => handleFilterChange("Category", "Keyboard")}
               />
               <label className="form-check-label" htmlFor="keyboard">
                 Keyboard
@@ -52,6 +73,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="headset"
+                checked={searchParams.get("Category") === "Headset"}
+                onChange={() => handleFilterChange("Category", "Headset")}
               />
               <label className="form-check-label" htmlFor="headset">
                 Headset
@@ -63,6 +86,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="monitor"
+                checked={searchParams.get("Category") === "Monitor"}
+                onChange={() => handleFilterChange("Category", "Monitor")}
               />
               <label className="form-check-label" htmlFor="monitor">
                 Monitor
@@ -74,6 +99,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="controller"
+                checked={searchParams.get("Category") === "Controller"}
+                onChange={() => handleFilterChange("Category", "Controller")}
               />
               <label className="form-check-label" htmlFor="controller">
                 Controller
@@ -85,6 +112,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="deskmat"
+                checked={searchParams.get("Category") === "Deskmat"}
+                onChange={() => handleFilterChange("Category", "Deskmat")}
               />
               <label className="form-check-label" htmlFor="deskmat">
                 Deskmat
@@ -98,6 +127,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="hyperx"
+                checked={searchParams.get("Brand") === "HyperX"}
+                onChange={() => handleFilterChange("Brand", "HyperX")}
               />
               <label className="form-check-label" htmlFor="hyperx">
                 HyperX
@@ -109,6 +140,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="logitechg"
+                checked={searchParams.get("Brand") === "LogitechG"}
+                onChange={() => handleFilterChange("Brand", "LogitechG")}
               />
               <label className="form-check-label" htmlFor="logitechg">
                 LogitechG
@@ -120,6 +153,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="steelseries"
+                checked={searchParams.get("Brand") === "SteelSeries"}
+                onChange={() => handleFilterChange("Brand", "SteelSeries")}
               />
               <label className="form-check-label" htmlFor="steelseries">
                 SteelSeries
@@ -131,6 +166,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="corsair"
+                checked={searchParams.get("Brand") === "Corsair"}
+                onChange={() => handleFilterChange("Brand", "Corsair")}
               />
               <label className="form-check-label" htmlFor="corsair">
                 Corsair
@@ -141,9 +178,11 @@ const Search = () => {
                 className="form-check-input"
                 type="checkbox"
                 value=""
-                id="mouse"
+                id="asus"
+                checked={searchParams.get("Brand") === "Asus"}
+                onChange={() => handleFilterChange("Brand", "Asus")}
               />
-              <label className="form-check-label" htmlFor="mouse">
+              <label className="form-check-label" htmlFor="asus">
                 Asus
               </label>
             </div>
@@ -153,6 +192,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="secretlab"
+                checked={searchParams.get("Brand") === "SecretLab"}
+                onChange={() => handleFilterChange("Brand", "SecretLab")}
               />
               <label className="form-check-label" htmlFor="secretlab">
                 Secretlab
@@ -164,6 +205,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="audeze"
+                checked={searchParams.get("Brand") === "Audeze"}
+                onChange={() => handleFilterChange("Brand", "Audeze")}
               />
               <label className="form-check-label" htmlFor="audeze">
                 Audeze
@@ -175,6 +218,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="coolermaster"
+                checked={searchParams.get("Brand") === "CoolerMaster"}
+                onChange={() => handleFilterChange("Brand", "CoolerMaster")}
               />
               <label className="form-check-label" htmlFor="coolermaster">
                 Cooler Master
@@ -188,6 +233,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="hargatertinggi"
+                checked={searchParams.get("Harga") === "Asc"}
+                onChange={() => handleFilterChange("Harga", "Asc")}
               />
               <label className="form-check-label" htmlFor="hargatertinggi">
                 Harga Tertinggi
@@ -199,6 +246,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="hargaterendah"
+                checked={searchParams.get("Harga") === "Desc"}
+                onChange={() => handleFilterChange("Harga", "Desc")}
               />
               <label className="form-check-label" htmlFor="hargaterendah">
                 Harga Terendah

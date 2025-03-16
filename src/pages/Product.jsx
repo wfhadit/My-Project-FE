@@ -26,19 +26,19 @@ const Product = () => {
       <Navbar />
       <br />
       <br />
-      <div className="container pt-5 px-5">
-        <div className="row">
-          <div className="col p-2">
-            <img src={product.image} alt="" className="img-thumbnail " />
+      <div className="container mt-5">
+        <div className="row" data-masonry='{"percentPosition": true }'>
+          <div className="col-sm-4 col-lg-3 col-md-3 mb-4">
+            <img src={product.image} alt="" className="img-thumbnail ms-4" />
           </div>
-          <div className="col  p-3 ">
+          <div className="col-sm-3 col-lg-4 col-md-4 mb-4 px-3">
             <h5>{product.nama}</h5>
             <h6>{product.brand}</h6>
             <h6 className="text-danger">Rp. {product.price}</h6>
             <p style={{ textAlign: "justify" }}>{product.description}</p>
           </div>
-          <div className="col  p-5">
-            <div className="card mb-3 p-2" style={{ width: "17rem" }}>
+          <div className="col-sm-5 col-lg-4 col-md-5 mb-4 pe-5">
+            <div className="card mb-3 p-2">
               <div className="card-body">
                 <h5 className="card-title ">Pembelian</h5>
                 <div
@@ -60,9 +60,7 @@ const Product = () => {
                   <button
                     type="button"
                     className="btn btn-danger"
-                    onClick={() =>
-                      setCount((x) => (x < product.amount ? x + 1 : x))
-                    }
+                    onClick={() => setCount(() => setCount(count + 1))}
                     disabled={count === product.amount}
                   >
                     +

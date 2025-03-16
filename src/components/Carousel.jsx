@@ -37,6 +37,18 @@ const Carousel = () => {
           <div className="ratio ratio-21x9">
             <img src="https://res.cloudinary.com/dvehysudh/image/upload/ecommerce/fwebp_i30aqb.webp" />
           </div>
+          <div className="container">
+            <div className="carousel-caption text-start">
+              <p>
+                <a
+                  className="btn btn-lg btn-danger btn-sm"
+                  onClick={() => nav("/product/21")}
+                >
+                  Klik Detail
+                </a>
+              </p>
+            </div>
+          </div>
         </div>
         <div className="carousel-item active">
           <div className="ratio ratio-21x9">
@@ -49,7 +61,7 @@ const Carousel = () => {
               <p>
                 <a
                   className="btn btn-lg btn-danger btn-sm"
-                  onClick={() => nav("/product")}
+                  onClick={() => nav("/product/38")}
                 >
                   Cek Produk
                 </a>
@@ -68,7 +80,7 @@ const Carousel = () => {
               <p>Keyboard mechanical premium</p>
               <p>
                 <a
-                  onClick={() => nav("/product")}
+                  onClick={() => nav("/product/47")}
                   className="btn btn-lg btn-danger btn-sm"
                 >
                   Pelajari

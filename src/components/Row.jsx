@@ -15,7 +15,7 @@ const Row = () => {
               <p className="fw-bold">Headphone Premium</p>
               <button
                 className="btn btn-danger btn-sm"
-                onClick={() => nav("/product")}
+                onClick={() => nav("/product/35")}
               >
                 Beli Sekarang
               </button>
@@ -30,7 +30,7 @@ const Row = () => {
               <p className="fw-bold">Audio Berkualitas</p>
               <button
                 className="btn btn-danger btn-sm"
-                onClick={() => nav("/product")}
+                onClick={() => nav("/product/34")}
               >
                 Lihat Detail
               </button>

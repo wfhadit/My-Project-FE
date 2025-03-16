@@ -2,21 +2,40 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { MdSkipPrevious } from "react-icons/md";
 import { MdSkipNext } from "react-icons/md";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { api } from "../api/axios";
+import { useEffect, useState } from "react";
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [products, setProducts] = useState([]);
+  const nav = useNavigate();
+  const [page, setPage] = useState(1);
+  const brand = searchParams.get("brand");
+  const category = searchParams.get("category");
+  const price = searchParams.get("price");
+  const q = searchParams.get("q");
+  const fetchProducts = () => {
+    api
+      .get(`/search`, { params: { page, brand, category, price, q } })
+      .then((res) => {
+        setProducts(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, [page, brand, category, price, q]);
 
   const handleFilterChange = (key, value) => {
     const params = new URLSearchParams(searchParams);
-
-    // Jika parameter sudah ada, hapus
     if (params.get(key) === value) {
       params.delete(key);
     } else {
       params.set(key, value);
     }
-
+    params.delete("q");
     setSearchParams(params);
   };
   return (
@@ -34,8 +53,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="kursi"
-                checked={searchParams.get("Category") === "Kursi"}
-                onChange={() => handleFilterChange("Category", "Kursi")}
+                checked={searchParams.get("category") === "kursi"}
+                onChange={() => handleFilterChange("category", "kursi")}
               />
               <label className="form-check-label" htmlFor="kursi">
                 Kursi
@@ -47,8 +66,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="mouse"
-                checked={searchParams.get("Category") === "Mouse"}
-                onChange={() => handleFilterChange("Category", "Mouse")}
+                checked={searchParams.get("category") === "mouse"}
+                onChange={() => handleFilterChange("category", "mouse")}
               />
               <label className="form-check-label" htmlFor="mouse">
                 Mouse
@@ -60,8 +79,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="keyboard"
-                checked={searchParams.get("Category") === "Keyboard"}
-                onChange={() => handleFilterChange("Category", "Keyboard")}
+                checked={searchParams.get("category") === "keyboard"}
+                onChange={() => handleFilterChange("category", "keyboard")}
               />
               <label className="form-check-label" htmlFor="keyboard">
                 Keyboard
@@ -73,8 +92,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="headset"
-                checked={searchParams.get("Category") === "Headset"}
-                onChange={() => handleFilterChange("Category", "Headset")}
+                checked={searchParams.get("category") === "headset"}
+                onChange={() => handleFilterChange("category", "headset")}
               />
               <label className="form-check-label" htmlFor="headset">
                 Headset
@@ -86,8 +105,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="monitor"
-                checked={searchParams.get("Category") === "Monitor"}
-                onChange={() => handleFilterChange("Category", "Monitor")}
+                checked={searchParams.get("category") === "monitor"}
+                onChange={() => handleFilterChange("category", "monitor")}
               />
               <label className="form-check-label" htmlFor="monitor">
                 Monitor
@@ -99,8 +118,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="controller"
-                checked={searchParams.get("Category") === "Controller"}
-                onChange={() => handleFilterChange("Category", "Controller")}
+                checked={searchParams.get("category") === "controller"}
+                onChange={() => handleFilterChange("category", "controller")}
               />
               <label className="form-check-label" htmlFor="controller">
                 Controller
@@ -112,8 +131,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="deskmat"
-                checked={searchParams.get("Category") === "Deskmat"}
-                onChange={() => handleFilterChange("Category", "Deskmat")}
+                checked={searchParams.get("category") === "deskmat"}
+                onChange={() => handleFilterChange("category", "deskmat")}
               />
               <label className="form-check-label" htmlFor="deskmat">
                 Deskmat
@@ -127,8 +146,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="hyperx"
-                checked={searchParams.get("Brand") === "HyperX"}
-                onChange={() => handleFilterChange("Brand", "HyperX")}
+                checked={searchParams.get("brand") === "hyperx"}
+                onChange={() => handleFilterChange("brand", "hyperx")}
               />
               <label className="form-check-label" htmlFor="hyperx">
                 HyperX
@@ -140,8 +159,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="logitechg"
-                checked={searchParams.get("Brand") === "LogitechG"}
-                onChange={() => handleFilterChange("Brand", "LogitechG")}
+                checked={searchParams.get("brand") === "logitechg"}
+                onChange={() => handleFilterChange("brand", "logitechg")}
               />
               <label className="form-check-label" htmlFor="logitechg">
                 LogitechG
@@ -153,8 +172,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="steelseries"
-                checked={searchParams.get("Brand") === "SteelSeries"}
-                onChange={() => handleFilterChange("Brand", "SteelSeries")}
+                checked={searchParams.get("brand") === "steelseries"}
+                onChange={() => handleFilterChange("brand", "steelseries")}
               />
               <label className="form-check-label" htmlFor="steelseries">
                 SteelSeries
@@ -166,8 +185,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="corsair"
-                checked={searchParams.get("Brand") === "Corsair"}
-                onChange={() => handleFilterChange("Brand", "Corsair")}
+                checked={searchParams.get("brand") === "corsair"}
+                onChange={() => handleFilterChange("brand", "corsair")}
               />
               <label className="form-check-label" htmlFor="corsair">
                 Corsair
@@ -179,8 +198,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="asus"
-                checked={searchParams.get("Brand") === "Asus"}
-                onChange={() => handleFilterChange("Brand", "Asus")}
+                checked={searchParams.get("brand") === "asus"}
+                onChange={() => handleFilterChange("brand", "asus")}
               />
               <label className="form-check-label" htmlFor="asus">
                 Asus
@@ -192,8 +211,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="secretlab"
-                checked={searchParams.get("Brand") === "SecretLab"}
-                onChange={() => handleFilterChange("Brand", "SecretLab")}
+                checked={searchParams.get("brand") === "secretlab"}
+                onChange={() => handleFilterChange("brand", "secretlab")}
               />
               <label className="form-check-label" htmlFor="secretlab">
                 Secretlab
@@ -205,8 +224,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="audeze"
-                checked={searchParams.get("Brand") === "Audeze"}
-                onChange={() => handleFilterChange("Brand", "Audeze")}
+                checked={searchParams.get("brand") === "audeze"}
+                onChange={() => handleFilterChange("brand", "audeze")}
               />
               <label className="form-check-label" htmlFor="audeze">
                 Audeze
@@ -218,8 +237,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="coolermaster"
-                checked={searchParams.get("Brand") === "CoolerMaster"}
-                onChange={() => handleFilterChange("Brand", "CoolerMaster")}
+                checked={searchParams.get("brand") === "coolermaster"}
+                onChange={() => handleFilterChange("brand", "coolermaster")}
               />
               <label className="form-check-label" htmlFor="coolermaster">
                 Cooler Master
@@ -233,8 +252,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="hargatertinggi"
-                checked={searchParams.get("Harga") === "Asc"}
-                onChange={() => handleFilterChange("Harga", "Asc")}
+                checked={searchParams.get("price") === "asc"}
+                onChange={() => handleFilterChange("price", "asc")}
               />
               <label className="form-check-label" htmlFor="hargatertinggi">
                 Harga Tertinggi
@@ -246,8 +265,8 @@ const Search = () => {
                 type="checkbox"
                 value=""
                 id="hargaterendah"
-                checked={searchParams.get("Harga") === "Desc"}
-                onChange={() => handleFilterChange("Harga", "Desc")}
+                checked={searchParams.get("price") === "desc"}
+                onChange={() => handleFilterChange("price", "desc")}
               />
               <label className="form-check-label" htmlFor="hargaterendah">
                 Harga Terendah
@@ -256,180 +275,52 @@ const Search = () => {
           </div>
           <div className="col-9">
             <div className="row row-cols-5 row-cols-md-5 g-2 py-2">
-              <div className="col">
-                <div className="card custom-card">
-                  <img
-                    src="https://images.tokopedia.net/img/cache/200-square/VqbcmM/2024/10/2/e2912df8-0168-4eaf-80d3-fe5d7c2073ca.png"
-                    alt="mouse steelseries"
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h6 className="card-title">Aerox 9</h6>
-                    <p className="card-text">Steelseries</p>
-                  </div>
-                  <div className="card-footer">
-                    <small>Rp 2.600.000</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="card">
-                  <img
-                    src="https://images.tokopedia.net/img/cache/200-square/VqbcmM/2023/7/20/66ec3400-d2af-4f0a-ba40-c2e391d7cfb1.jpg.webp?ect=4g"
-                    alt="mouse steelseries"
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h6 className="card-title">Aerox 9</h6>
-                    <p className="card-text">Steelseries</p>
-                  </div>
-                  <div className="card-footer">
-                    <small>Rp 2.600.000</small>
+              {products.map((product) => (
+                <div className="col" key={product.id}>
+                  <div
+                    className="card custom-card"
+                    onClick={() => nav(`/product/${product.id}`)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <img
+                      src={product.image}
+                      alt="mouse steelseries"
+                      className="card-img-top"
+                    />
+                    <div className="card-body">
+                      <h6 className="card-title">{product.nama}</h6>
+                      <p className="card-text">{product.brand}</p>
+                    </div>
+                    <div className="card-footer">
+                      <small>Rp {product.price}</small>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="col">
-                <div className="card">
-                  <img
-                    src="https://images.tokopedia.net/img/cache/200-square/VqbcmM/2024/10/2/e2912df8-0168-4eaf-80d3-fe5d7c2073ca.png"
-                    alt="mouse steelseries"
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h6 className="card-title">Aerox 9</h6>
-                    <p className="card-text">Steelseries</p>
-                  </div>
-                  <div className="card-footer">
-                    <small>Rp 2.600.000</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="card">
-                  <img
-                    src="https://images.tokopedia.net/img/cache/200-square/VqbcmM/2024/10/2/e2912df8-0168-4eaf-80d3-fe5d7c2073ca.png"
-                    alt="mouse steelseries"
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h6 className="card-title">Aerox 9</h6>
-                    <p className="card-text">Steelseries</p>
-                  </div>
-                  <div className="card-footer">
-                    <small>Rp 2.600.000</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="card">
-                  <img
-                    src="https://images.tokopedia.net/img/cache/200-square/VqbcmM/2024/10/2/e2912df8-0168-4eaf-80d3-fe5d7c2073ca.png"
-                    alt="mouse steelseries"
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h6 className="card-title">Aerox 9</h6>
-                    <p className="card-text">Steelseries</p>
-                  </div>
-                  <div className="card-footer">
-                    <small>Rp 2.600.000</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="card">
-                  <img
-                    src="https://images.tokopedia.net/img/cache/200-square/VqbcmM/2024/10/2/e2912df8-0168-4eaf-80d3-fe5d7c2073ca.png"
-                    alt="mouse steelseries"
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h6 className="card-title">Aerox 9</h6>
-                    <p className="card-text">Steelseries</p>
-                  </div>
-                  <div className="card-footer">
-                    <small>Rp 2.600.000</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="card">
-                  <img
-                    src="https://images.tokopedia.net/img/cache/200-square/VqbcmM/2024/10/2/e2912df8-0168-4eaf-80d3-fe5d7c2073ca.png"
-                    alt="mouse steelseries"
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h6 className="card-title">Aerox 9</h6>
-                    <p className="card-text">Steelseries</p>
-                  </div>
-                  <div className="card-footer">
-                    <small>Rp 2.600.000</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="card">
-                  <img
-                    src="https://images.tokopedia.net/img/cache/200-square/VqbcmM/2024/10/2/e2912df8-0168-4eaf-80d3-fe5d7c2073ca.png"
-                    alt="mouse steelseries"
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h6 className="card-title">Aerox 9</h6>
-                    <p className="card-text">Steelseries</p>
-                  </div>
-                  <div className="card-footer">
-                    <small>Rp 2.600.000</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="card">
-                  <img
-                    src="https://images.tokopedia.net/img/cache/200-square/VqbcmM/2024/10/2/e2912df8-0168-4eaf-80d3-fe5d7c2073ca.png"
-                    alt="mouse steelseries"
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h6 className="card-title">Aerox 9</h6>
-                    <p className="card-text">Steelseries</p>
-                  </div>
-                  <div className="card-footer">
-                    <small>Rp 2.600.000</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="card">
-                  <img
-                    src="https://images.tokopedia.net/img/cache/200-square/VqbcmM/2024/10/2/e2912df8-0168-4eaf-80d3-fe5d7c2073ca.png"
-                    alt="mouse steelseries"
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h6 className="card-title">Aerox 9</h6>
-                    <p className="card-text">Steelseries</p>
-                  </div>
-                  <div className="card-footer">
-                    <small>Rp 2.600.000</small>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
             <div className="row justify-content-center">
               <div className="col-auto pt-3">
                 <nav aria-label="Page navigation">
                   <ul className="pagination">
                     <li className="page-item">
-                      <a href="#" className="page-link text-black">
+                      <button
+                        className="btn btn-dark"
+                        onClick={() => setPage(page - 1)}
+                        style={{ cursor: "pointer" }}
+                        disabled={page === 1}
+                      >
                         <MdSkipPrevious />
-                      </a>
+                      </button>
                     </li>
                     <li className="page-item">
-                      <a href="#" className="page-link text-black">
+                      <button
+                        className="btn btn-dark"
+                        onClick={() => setPage(page + 1)}
+                        style={{ cursor: "pointer" }}
+                        disabled={page === 5}
+                      >
                         <MdSkipNext />
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </nav>

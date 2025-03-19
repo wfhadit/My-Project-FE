@@ -3,11 +3,17 @@ import { api } from "../api/axios";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { constant } from "../constant";
 
 const Product = () => {
   const [count, setCount] = useState(0);
   const [product, setProduct] = useState({});
   const params = useParams();
+  const dispatch = useDispatch();
+  const cartSelector = useSelector((state) => state.cart);
+  console.log(cartSelector);
   const fetchProduct = () => {
     api
       .get("/product/" + params.productID)
@@ -18,9 +24,42 @@ const Product = () => {
         console.log(err);
       });
   };
+  const formik = useFormik({
+    initialValues: {
+      product_id: 0,
+      product_nama: "",
+      product_image: "",
+      product_price: 0,
+      quantity: 0,
+    },
+    onSubmit: async (values) => {
+      try {
+        console.log(values);
+        await api.post("/cart", values);
+        const res = await api.get("/cart");
+        console.log(res.data.data);
+        dispatch({
+          type: constant.CART_ADD,
+          payload: res.data.data,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
   useEffect(() => {
     fetchProduct();
   }, []);
+  useEffect(() => {
+    formik.setValues({
+      product_id: product.id,
+      product_nama: product.nama,
+      product_image: product.image,
+      product_price: product.price,
+      quantity: count,
+    });
+  }, [product, count]);
+
   return (
     <>
       <Navbar />
@@ -71,7 +110,11 @@ const Product = () => {
                   Subtotal:
                   <span className="ps-3">Rp. {count * product.price}</span>
                 </p>
-                <button type="button" className="btn btn-danger">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={formik.handleSubmit}
+                >
                   Tambahkan ke Keranjang
                 </button>
               </div>

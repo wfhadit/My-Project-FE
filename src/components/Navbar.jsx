@@ -9,6 +9,7 @@ const Navbar = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const userSelector = useSelector((state) => state.auth);
+  const cartSelector = useSelector((state) => state.cart);
   const handlebrand = (brand) => {
     nav(`/search?brand=${brand}`);
   };
@@ -122,7 +123,7 @@ const Navbar = () => {
               </ul>
             </li>
           </ul>
-          <form className="container-fluid" role="search">
+          <form className="container-fluid pb-1" role="search">
             <div className="input-group ">
               <span className="input-group-text">
                 <CiSearch size={20} />
@@ -141,14 +142,22 @@ const Navbar = () => {
               />
             </div>
           </form>
-          <ul className="navbar-nav mb-2 mb-md-0 ">
+          <ul className="navbar-nav mb-2 mb-md-0 mt-2">
             <li className="nav-item dropstart mx-auto">
               <IoCartOutline
-                size={40}
+                size={30}
                 color="white"
                 onClick={() => nav("/cart")}
                 className=" me-3"
+                style={{ cursor: "pointer" }}
               />
+              <span
+                className={`ms-2 position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger ${
+                  cartSelector.length === 0 ? "visually-hidden" : ""
+                }`}
+              >
+                {cartSelector.length}
+              </span>
             </li>
           </ul>
           {userSelector.id ? (

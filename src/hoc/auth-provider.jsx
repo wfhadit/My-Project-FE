@@ -20,6 +20,10 @@ export const AuthProvider = ({ children }) => {
           payload: res.data.user,
         });
         localStorage.setItem("auth", res.data.token);
+        dispatch({
+          type: constant.CART_ADD,
+          payload: res.data.cart,
+        });
       })
       .catch((err) => {
         console.log(err);

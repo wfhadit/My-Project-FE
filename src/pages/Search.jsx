@@ -10,6 +10,7 @@ const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const nav = useNavigate();
+  const [totalPage, setTotalPage] = useState(0);
   const [page, setPage] = useState(1);
   const brand = searchParams.get("brand");
   const category = searchParams.get("category");
@@ -20,6 +21,7 @@ const Search = () => {
       .get(`/search`, { params: { page, brand, category, price, q } })
       .then((res) => {
         setProducts(res.data.data);
+        setTotalPage(res.data.total_pages);
         console.log(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -44,8 +46,8 @@ const Search = () => {
       <br />
       <br />
       <div className="container pt-5 px-5">
-        <div className="row ">
-          <div className="col-3 border bg-light rounded p-3">
+        <div className="row " data-masonry='{"percentPosition": true }'>
+          <div className="col-sm-2 col-lg-3 col-md-3 mb-2 border bg-light rounded p-3">
             <h5>Kategori</h5>
             <div className="form-check">
               <input
@@ -273,8 +275,8 @@ const Search = () => {
               </label>
             </div>
           </div>
-          <div className="col-9">
-            <div className="row row-cols-5 row-cols-md-5 g-2 py-2">
+          <div className="col-sm-4 col-lg-9 col-md-9 mb-4">
+            <div className="row row-cols-2 row-cols-md-5 g-2 py-2">
               {products.map((product) => (
                 <div className="col" key={product.id}>
                   <div
@@ -292,7 +294,10 @@ const Search = () => {
                       <p className="card-text">{product.brand}</p>
                     </div>
                     <div className="card-footer">
-                      <small>Rp {product.price}</small>
+                      <small>
+                        Rp{" "}
+                        {new Intl.NumberFormat("id-ID").format(product.price)}
+                      </small>
                     </div>
                   </div>
                 </div>
@@ -317,7 +322,7 @@ const Search = () => {
                         className="btn btn-dark"
                         onClick={() => setPage(page + 1)}
                         style={{ cursor: "pointer" }}
-                        disabled={page === 5}
+                        disabled={totalPage === 0 || page >= totalPage}
                       >
                         <MdSkipNext />
                       </button>

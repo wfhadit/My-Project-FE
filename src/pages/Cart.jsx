@@ -1,15 +1,13 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { useState } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const Cart = () => {
-  const [count, setCount] = useState(0);
   const cartSelector = useSelector((state) => state.cart);
   const nav = useNavigate();
   console.log(cartSelector.product_price);
-  console.log(setCount);
+
   return (
     <>
       <Navbar />
@@ -32,7 +30,12 @@ const Cart = () => {
                     </div>
                     <div className="col-6 ">{item.product_nama}</div>
                     <div className="col-4 ">
-                      <h5>Rp. {item.product_price}</h5>
+                      <h5>
+                        Rp{" "}
+                        {new Intl.NumberFormat("id-ID").format(
+                          item.product_price
+                        )}
+                      </h5>
                       <div
                         className="btn-group"
                         role="group"
@@ -70,8 +73,14 @@ const Cart = () => {
             <div className="card">
               <div className="card-body text-center">
                 <h5 className="card-title">
-                  Total Harga: Rp.
-                  <span> {count * cartSelector.product_price}</span>
+                  Total Harga: Rp{" "}
+                  {cartSelector.reduce(
+                    (total, item) =>
+                      new Intl.NumberFormat("id-ID").format(
+                        total + item.product_price * item.quantity
+                      ),
+                    0
+                  )}
                 </h5>
                 <hr />
                 <button

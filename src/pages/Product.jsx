@@ -73,7 +73,9 @@ const Product = () => {
           <div className="col-sm-3 col-lg-4 col-md-4 mb-4 px-3">
             <h5>{product.nama}</h5>
             <h6>{product.brand}</h6>
-            <h6 className="text-danger">Rp. {product.price}</h6>
+            <h6 className="text-danger">
+              Rp {new Intl.NumberFormat("id-ID").format(product.price)}
+            </h6>
             <p style={{ textAlign: "justify" }}>{product.description}</p>
           </div>
           <div className="col-sm-5 col-lg-4 col-md-5 mb-4 pe-5">
@@ -108,7 +110,12 @@ const Product = () => {
                 <span className="ps-3">Stok : {product.amount}</span>
                 <p className="card-text pt-3">
                   Subtotal:
-                  <span className="ps-3">Rp. {count * product.price}</span>
+                  <span className="ps-3">
+                    Rp{" "}
+                    {new Intl.NumberFormat("id-ID").format(
+                      count * product.price
+                    )}
+                  </span>
                 </p>
                 <button
                   type="button"

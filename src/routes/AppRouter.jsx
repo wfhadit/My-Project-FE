@@ -1,5 +1,6 @@
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
+import { History } from "../pages/History";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Payment from "../pages/Payment";
@@ -44,5 +45,13 @@ export const routes = [
   {
     path: "/payment",
     element: <Payment />,
+  },
+  {
+    path: "/history",
+    element: <History />,
+  },
+  {
+    path: "*",
+    element: <Home />,
   },
 ];

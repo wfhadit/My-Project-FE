@@ -34,7 +34,6 @@ const Product = () => {
     },
     onSubmit: async (values) => {
       try {
-        console.log(values);
         await api.post("/cart", values);
         const res = await api.get("/cart");
         console.log(res.data.data);

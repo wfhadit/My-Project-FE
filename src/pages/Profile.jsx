@@ -80,7 +80,7 @@ const Profile = () => {
                   </span>
                 </p>
                 <p>
-                  Tanggal Lahir: <span>{userSelector.tanggal_lahir}</span>
+                  Tanggal Lahir: <span>{userSelector?.tanggal_lahir}</span>
                   <span className="ps-2">
                     <BiEdit
                       type="button"
@@ -247,6 +247,7 @@ const Profile = () => {
                               id="kelamin1"
                               name="kelamin"
                               value="Pria"
+                              defaultChecked
                               onChange={(e) =>
                                 formik.setFieldValue(
                                   "jenis_kelamin",

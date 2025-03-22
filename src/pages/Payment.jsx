@@ -1,45 +1,82 @@
+import { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { api } from "../api/axios";
+import { CountdownTimer } from "../countdown/countdown";
+import { useNavigate } from "react-router-dom";
 
 const Payment = () => {
+  const nav = useNavigate();
+  const [order, setOrder] = useState({});
+  const fetchOrder = async () => {
+    try {
+      const res = await api.get("/order");
+      setOrder(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrder();
+  }, []);
+
   return (
     <>
       <Navbar />
       <br />
       <br />
       <br />
+      <br />
       <div className="container text-center">
         <h5>Selesaikan pembayaran dalam</h5>
-        <h5 className="text-danger">23:59:59</h5>
+        <h5 className="text-danger">
+          <CountdownTimer createdAt={order.created_at} />
+        </h5>
         <h6>Batas Akhir Pembayaran</h6>
-        <h5>Jumat, 7 Maret 2025 15:39</h5>
+        <h5>
+          {new Date(
+            new Date(order.created_at).setDate(
+              new Date(order.created_at).getDate() + 1
+            )
+          )
+            .toLocaleString("sv-SE")
+            .replace("T", " ")}
+        </h5>
         <br />
         <div className="row" data-masonry='{"percentPosition": true }'>
-          <div className="col-lg-3 col-sm-4"></div>
-          <div className="col-lg-6 col-sm-4">
+          <div className="col-lg-3 col-sm-4 col-md-3"></div>
+          <div className="col-lg-6 col-sm-4 col-md-6">
             <div className="card ">
               <div className="card-body">
-                <div className="card-title text-start">BCA Virtual Account</div>
+                <div className="card-title text-start">
+                  {order.payment_method?.toUpperCase()} Virtual Account
+                </div>
                 <hr />
                 <div className="card-text text-start d-flex">
                   Nomor Virtual Account
-                  <span className="ms-auto">9881671134877613</span>
+                  <span className="ms-auto">{order.va_number}</span>
                 </div>
                 <hr />
                 <div className="card-text text-start d-flex">
                   Total Tagihan
-                  <span className="ms-auto">Rp. 1.500.000</span>
+                  <span className="ms-auto">
+                    Rp{" "}
+                    {new Intl.NumberFormat("id-ID").format(order.total_price)}
+                  </span>
                 </div>
                 <hr />
                 <button
-                  className="btn btn-outline-danger me-2"
+                  className="btn btn-outline-danger me-2 mb-2"
                   style={{ height: 40, width: 250 }}
+                  onClick={() => nav("/order-list")}
                 >
                   Cek Status Pembayaran
                 </button>
                 <button
-                  className="btn btn-danger"
+                  className="btn btn-danger mb-2"
                   style={{ width: 250, height: 40 }}
+                  onClick={() => nav("/search")}
                 >
                   Belanja Lagi
                 </button>
@@ -49,8 +86,8 @@ const Payment = () => {
         </div>
         <br />
         <div className="row" data-masonry='{"percentPosition": true }'>
-          <div className="col-lg-3 col-sm-4"></div>
-          <div className="col-lg-6 col-sm-4">
+          <div className="col-lg-3 col-sm-4 col-md-3"></div>
+          <div className="col-lg-6 col-sm-4 col-md-6">
             <div className="card">
               <div className="card-body text-start">
                 <div className="card-title ">Cara Pembayaran</div>

@@ -1,12 +1,61 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
+import { api } from "../api/axios";
+import { constant } from "../constant";
+import { useEffect } from "react";
 
 const Checkout = () => {
   const nav = useNavigate();
   const userSelector = useSelector((state) => state.auth);
   const cartSelector = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const formik = useFormik({
+    initialValues: {
+      total_price: 0,
+      payment_method: "",
+      items: [
+        {
+          product_id: 0,
+          product_name: "",
+          product_image: "",
+          product_price: 0,
+          quantity: 0,
+        },
+      ],
+    },
+    onSubmit: async (values) => {
+      try {
+        console.log(values);
+        await api.post("/order", values);
+        dispatch({
+          type: constant.CART_REMOVE,
+        });
+        nav("/payment");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
+  useEffect(() => {
+    formik.setValues({
+      total_price: cartSelector.reduce(
+        (total, item) => total + item.product_price * item.quantity,
+        0
+      ),
+      items: cartSelector.map((item) => {
+        return {
+          product_id: item.product_id,
+          product_name: item.product_nama,
+          product_image: item.product_image,
+          product_price: item.product_price,
+          quantity: item.quantity,
+        };
+      }),
+    });
+  }, [cartSelector]);
   return (
     <>
       <Navbar />
@@ -62,6 +111,10 @@ const Checkout = () => {
                       name="pembayaran"
                       id="bca"
                       value="bca"
+                      defaultChecked
+                      onChange={(e) => {
+                        formik.setFieldValue("payment_method", e.target.value);
+                      }}
                     />
                     <label htmlFor="bca" className="form-check-label">
                       BCA
@@ -74,6 +127,9 @@ const Checkout = () => {
                       name="pembayaran"
                       id="bni"
                       value="bni"
+                      onChange={(e) => {
+                        formik.setFieldValue("payment_method", e.target.value);
+                      }}
                     />
                     <label htmlFor="bni" className="form-check-label">
                       BNI
@@ -86,12 +142,12 @@ const Checkout = () => {
                   Total Harga
                   <span className="ms-auto">
                     Rp{" "}
-                    {cartSelector.reduce(
-                      (total, item) =>
-                        new Intl.NumberFormat("id-ID").format(
-                          total + item.product_price * item.quantity
-                        ),
-                      0
+                    {new Intl.NumberFormat("id-ID").format(
+                      cartSelector.reduce(
+                        (total, item) =>
+                          total + item.product_price * item.quantity,
+                        0
+                      )
                     )}
                   </span>
                 </div>
@@ -99,7 +155,10 @@ const Checkout = () => {
                 <div className="text-center">
                   <button
                     className="btn btn-danger"
-                    onClick={() => nav("/payment")}
+                    type="submit"
+                    onClick={() => {
+                      formik.handleSubmit();
+                    }}
                   >
                     Bayar Sekarang
                   </button>

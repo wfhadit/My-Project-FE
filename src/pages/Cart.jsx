@@ -74,12 +74,12 @@ const Cart = () => {
               <div className="card-body text-center">
                 <h5 className="card-title">
                   Total Harga: Rp{" "}
-                  {cartSelector.reduce(
-                    (total, item) =>
-                      new Intl.NumberFormat("id-ID").format(
-                        total + item.product_price * item.quantity
-                      ),
-                    0
+                  {new Intl.NumberFormat("id-ID").format(
+                    cartSelector.reduce(
+                      (total, item) =>
+                        total + item.product_price * item.quantity,
+                      0
+                    )
                   )}
                 </h5>
                 <hr />

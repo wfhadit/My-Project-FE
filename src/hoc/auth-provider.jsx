@@ -24,6 +24,10 @@ export const AuthProvider = ({ children }) => {
           type: constant.CART_ADD,
           payload: res.data.cart,
         });
+        dispatch({
+          type: constant.ORDER_ADD,
+          payload: res.data.order,
+        });
       })
       .catch((err) => {
         console.log(err);

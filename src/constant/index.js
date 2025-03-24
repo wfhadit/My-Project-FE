@@ -6,4 +6,5 @@ export const constant = {
   CART_REMOVE: "CART_REMOVE",
   CART_UPDATE: "CART_UPDATE",
   CART_GET: "CART_GET",
+  ORDER_ADD: "ORDER_ADD",
 };

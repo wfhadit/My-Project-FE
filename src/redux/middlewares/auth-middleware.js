@@ -9,6 +9,8 @@ export const UserLogin = (values) => {
       const user = res.data.user;
       localStorage.setItem("auth", res.data.token);
       dispatch({ type: constant.USER_LOGIN, payload: user });
+      dispatch({ type: constant.CART_ADD, payload: res.data.cart });
+      dispatch({ type: constant.ORDER_ADD, payload: res.data.order });
 
       return constant.success;
     } catch (err) {

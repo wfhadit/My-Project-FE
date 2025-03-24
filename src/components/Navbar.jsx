@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UserLogout } from "../redux/middlewares/auth-middleware";
-import { IoCartOutline } from "react-icons/io5";
+import { IoCartOutline, IoFileTrayStackedOutline } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import { TbLogout } from "react-icons/tb";
 
@@ -10,6 +10,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const userSelector = useSelector((state) => state.auth);
   const cartSelector = useSelector((state) => state.cart);
+  const orderSelector = useSelector((state) => state.order);
   const handlebrand = (brand) => {
     nav(`/search?brand=${brand}`);
   };
@@ -157,6 +158,30 @@ const Navbar = () => {
                 }`}
               >
                 {cartSelector.length}
+              </span>
+            </li>
+          </ul>
+          <ul className="navbar-nav mb-2 mb-md-0 mt-2">
+            <li className="nav-item dropstart mx-auto">
+              <IoFileTrayStackedOutline
+                size={22}
+                color="white"
+                onClick={() => nav("/history")}
+                className=" me-3"
+                style={{ cursor: "pointer" }}
+              />
+              <span
+                className={`ms-1 position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger ${
+                  orderSelector.filter((item) => item.status === "pending")
+                    .length === 0
+                    ? "visually-hidden"
+                    : ""
+                }`}
+              >
+                {
+                  orderSelector.filter((item) => item.status === "pending")
+                    .length
+                }
               </span>
             </li>
           </ul>

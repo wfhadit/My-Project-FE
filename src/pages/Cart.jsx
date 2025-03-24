@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const cartSelector = useSelector((state) => state.cart);
   const nav = useNavigate();
-  console.log(cartSelector.product_price);
 
   return (
     <>
@@ -20,7 +19,7 @@ const Cart = () => {
               <div className="card mb-2" key={item.product_id}>
                 <div className="card-body">
                   <div className="row">
-                    <div className="col-2">
+                    <div className="col-sm-4 col-lg-2 col-md-3">
                       <img
                         src={item.product_image}
                         alt=""
@@ -28,8 +27,10 @@ const Cart = () => {
                         style={{ width: 100, height: 100 }}
                       />
                     </div>
-                    <div className="col-6 ">{item.product_nama}</div>
-                    <div className="col-4 ">
+                    <div className="col-sm-4 col-lg-6 col-md-4">
+                      {item.product_nama}
+                    </div>
+                    <div className="col-sm-4 col-lg-4 col-md-5 ">
                       <h5>
                         Rp{" "}
                         {new Intl.NumberFormat("id-ID").format(
@@ -59,8 +60,8 @@ const Cart = () => {
                           +
                         </button>
                       </div>
-                      <span className="ps-5">
-                        <MdOutlineDelete style={{ color: "red" }} size={45} />
+                      <span className="ps-2">
+                        <MdOutlineDelete style={{ color: "red" }} size={30} />
                       </span>
                     </div>
                   </div>

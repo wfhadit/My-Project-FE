@@ -15,7 +15,7 @@ const Checkout = () => {
   const formik = useFormik({
     initialValues: {
       total_price: 0,
-      payment_method: "",
+      payment_method: "bca",
       items: [
         {
           product_id: 0,
@@ -40,7 +40,12 @@ const Checkout = () => {
     },
   });
   useEffect(() => {
-    formik.setValues({
+    console.log(formik.values.payment_method);
+    if (!formik.values.payment_method) {
+      formik.setFieldValue("payment_method", "bca");
+    }
+    formik.setValues((prevValues) => ({
+      ...prevValues, // Keep existing values (termasuk payment_method)
       total_price: cartSelector.reduce(
         (total, item) => total + item.product_price * item.quantity,
         0
@@ -54,7 +59,7 @@ const Checkout = () => {
           quantity: item.quantity,
         };
       }),
-    });
+    }));
   }, [cartSelector]);
   return (
     <>
@@ -111,7 +116,7 @@ const Checkout = () => {
                       name="pembayaran"
                       id="bca"
                       value="bca"
-                      defaultChecked
+                      checked={formik.values.payment_method === "bca"}
                       onChange={(e) => {
                         formik.setFieldValue("payment_method", e.target.value);
                       }}
@@ -127,6 +132,7 @@ const Checkout = () => {
                       name="pembayaran"
                       id="bni"
                       value="bni"
+                      checked={formik.values.payment_method === "bni"}
                       onChange={(e) => {
                         formik.setFieldValue("payment_method", e.target.value);
                       }}

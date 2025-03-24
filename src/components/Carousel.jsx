@@ -42,7 +42,7 @@ const Carousel = () => {
               <p>
                 <a
                   className="btn btn-lg btn-danger btn-sm"
-                  onClick={() => nav("/product/21")}
+                  onClick={() => nav("/product/20")}
                 >
                   Klik Detail
                 </a>
@@ -61,7 +61,7 @@ const Carousel = () => {
               <p>
                 <a
                   className="btn btn-lg btn-danger btn-sm"
-                  onClick={() => nav("/product/38")}
+                  onClick={() => nav("/product/37")}
                 >
                   Cek Produk
                 </a>
@@ -80,7 +80,7 @@ const Carousel = () => {
               <p>Keyboard mechanical premium</p>
               <p>
                 <a
-                  onClick={() => nav("/product/47")}
+                  onClick={() => nav("/product/46")}
                   className="btn btn-lg btn-danger btn-sm"
                 >
                   Pelajari

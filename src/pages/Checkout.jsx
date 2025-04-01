@@ -45,7 +45,7 @@ const Checkout = () => {
       formik.setFieldValue("payment_method", "bca");
     }
     formik.setValues((prevValues) => ({
-      ...prevValues, // Keep existing values (termasuk payment_method)
+      ...prevValues,
       total_price: cartSelector.reduce(
         (total, item) => total + item.product_price * item.quantity,
         0

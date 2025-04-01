@@ -23,7 +23,7 @@ const Navbar = () => {
           onClick={() => nav("/")}
           style={{ cursor: "pointer" }}
         >
-          Toko Lama
+          TokoLama
         </a>
         <button
           className="navbar-toggler"
@@ -161,32 +161,33 @@ const Navbar = () => {
               </span>
             </li>
           </ul>
-          <ul className="navbar-nav mb-2 mb-md-0 mt-2">
-            <li className="nav-item dropstart mx-auto">
-              <IoFileTrayStackedOutline
-                size={22}
-                color="white"
-                onClick={() => nav("/history")}
-                className=" me-3"
-                style={{ cursor: "pointer" }}
-              />
-              <span
-                className={`ms-1 position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger ${
-                  orderSelector.filter((item) => item.status === "pending")
-                    .length === 0
-                    ? "visually-hidden"
-                    : ""
-                }`}
-              >
-                {
-                  orderSelector.filter((item) => item.status === "pending")
-                    .length
-                }
-              </span>
-            </li>
-          </ul>
+
           {userSelector.id ? (
             <>
+              <ul className="navbar-nav mb-2 mb-md-0 mt-2">
+                <li className="nav-item dropstart mx-auto">
+                  <IoFileTrayStackedOutline
+                    size={22}
+                    color="white"
+                    onClick={() => nav("/history")}
+                    className=" me-3"
+                    style={{ cursor: "pointer" }}
+                  />
+                  <span
+                    className={`ms-1 position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger ${
+                      orderSelector.filter((item) => item.status === "pending")
+                        .length === 0
+                        ? "visually-hidden"
+                        : ""
+                    }`}
+                  >
+                    {
+                      orderSelector.filter((item) => item.status === "pending")
+                        .length
+                    }
+                  </span>
+                </li>
+              </ul>
               <ul className="navbar-nav mb-2 mb-md-0 ">
                 <li className="nav-item dropstart mx-auto">
                   <a

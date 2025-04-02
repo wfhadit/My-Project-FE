@@ -69,7 +69,7 @@ const Payment = () => {
                 <button
                   className="btn btn-outline-danger me-2 mb-2"
                   style={{ height: 40, width: 250 }}
-                  onClick={() => nav("/order-list")}
+                  onClick={() => nav("/history")}
                 >
                   Cek Status Pembayaran
                 </button>

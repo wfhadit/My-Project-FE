@@ -12,7 +12,7 @@ export const UserLogin = (values) => {
       dispatch({ type: constant.CART_ADD, payload: res.data.cart });
       dispatch({ type: constant.ORDER_ADD, payload: res.data.order });
 
-      return constant.success;
+      return { status: constant.success, message: res.data.message };
     } catch (err) {
       localStorage.removeItem("auth");
       return err.response.data;

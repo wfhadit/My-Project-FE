@@ -1,7 +1,9 @@
 import { api } from "../api/axios";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { constant } from "../constant";
+
+const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
@@ -43,5 +45,11 @@ export const AuthProvider = ({ children }) => {
     if (userSelector.id) setIsLoading(false);
   }, [userSelector]);
 
-  return isLoading ? <></> : children;
+  return (
+    <AuthContext.Provider value={{ fetchData, isLoading }}>
+      {!isLoading && children}
+    </AuthContext.Provider>
+  );
 };
+
+export const useAuth = () => useContext(AuthContext);

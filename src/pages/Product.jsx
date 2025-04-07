@@ -4,16 +4,15 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { constant } from "../constant";
 
 const Product = () => {
-  const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(1);
   const [product, setProduct] = useState({});
   const params = useParams();
   const dispatch = useDispatch();
-  const cartSelector = useSelector((state) => state.cart);
-  console.log(cartSelector);
   const fetchProduct = () => {
     api
       .get("/product/" + params.productID)
@@ -58,6 +57,11 @@ const Product = () => {
       quantity: count,
     });
   }, [product, count]);
+  useEffect(() => {
+    if (product?.amount === 0) {
+      setCount(0);
+    }
+  }, [product]);
 
   return (
     <>
@@ -90,7 +94,7 @@ const Product = () => {
                     type="button"
                     className="btn btn-danger"
                     onClick={() => setCount(count - 1)}
-                    disabled={count === 0}
+                    disabled={count === 1 || count === 0}
                   >
                     -
                   </button>
@@ -100,8 +104,8 @@ const Product = () => {
                   <button
                     type="button"
                     className="btn btn-danger"
-                    onClick={() => setCount(() => setCount(count + 1))}
-                    disabled={count === product.amount}
+                    onClick={() => setCount(count + 1)}
+                    disabled={count === product.amount || count === 0}
                   >
                     +
                   </button>
@@ -119,9 +123,28 @@ const Product = () => {
                 <button
                   type="button"
                   className="btn btn-danger"
-                  onClick={formik.handleSubmit}
+                  disabled={product.amount === 0 || loading}
+                  onClick={() => {
+                    setLoading(true);
+                    formik.handleSubmit();
+                    setTimeout(() => {
+                      setLoading(false);
+                    }, 1000);
+                  }}
                 >
-                  Tambahkan ke Keranjang
+                  {loading ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm"
+                        aria-hidden="true"
+                      ></span>
+                      <span role="status" className="ms-2">
+                        Loading...
+                      </span>
+                    </>
+                  ) : (
+                    "Tambahkan ke Keranjang"
+                  )}
                 </button>
               </div>
             </div>

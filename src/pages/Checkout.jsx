@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { api } from "../api/axios";
 import { constant } from "../constant";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Checkout = () => {
+  const [loading, setLoading] = useState(false);
   const nav = useNavigate();
   const userSelector = useSelector((state) => state.auth);
   const cartSelector = useSelector((state) => state.cart);
@@ -33,7 +34,6 @@ const Checkout = () => {
         dispatch({
           type: constant.CART_REMOVE,
         });
-        nav("/payment");
       } catch (err) {
         console.log(err);
       }
@@ -162,11 +162,29 @@ const Checkout = () => {
                   <button
                     className="btn btn-danger"
                     type="submit"
+                    disabled={loading}
                     onClick={() => {
+                      setLoading(true);
                       formik.handleSubmit();
+                      setTimeout(() => {
+                        setLoading(false);
+                        nav("/payment");
+                      }, 1000);
                     }}
                   >
-                    Bayar Sekarang
+                    {loading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          aria-hidden="true"
+                        ></span>
+                        <span role="status" className="ms-2">
+                          Loading ...
+                        </span>
+                      </>
+                    ) : (
+                      "Bayar Sekarang"
+                    )}
                   </button>
                 </div>
               </div>

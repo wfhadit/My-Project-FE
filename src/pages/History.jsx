@@ -6,7 +6,7 @@ import { useState } from "react";
 export const History = () => {
   const orderSelector = useSelector((state) => state.order);
   const [show, setShow] = useState(null);
-  console.log(orderSelector);
+
   return (
     <>
       <Navbar />
@@ -24,6 +24,7 @@ export const History = () => {
                 key={item.id}
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
+                style={{ cursor: "pointer" }}
                 onClick={() => setShow(item)}
               >
                 <div className="card-body">
@@ -55,6 +56,39 @@ export const History = () => {
             ))}
           </div>
           <div className="col-sm-4 col-lg-2 col-md-2 "></div>
+        </div>
+        <div className="row" data-masonry='{"percentPosition": true }'>
+          <div className="col-sm-4 col-lg-2 col-md-2"></div>
+          <div className="col-sm-4 col-lg-8 col-md-8">
+            <div className="card">
+              <div className="card-body text-start">
+                <div className="card-title ">Cara Pembayaran</div>
+                <hr />
+                <div className="card-text">
+                  1. Pergi ke link
+                  <span className="ms-1">
+                    <a
+                      href="https://simulator.sandbox.midtrans.com/"
+                      className="text-danger"
+                      target="_blank"
+                    >
+                      payment
+                    </a>
+                  </span>
+                </div>
+                <div className="card-text">2. Pilih Virtual Account</div>
+                <div className="card-text">
+                  3. Pilih Bank yang dituju VA Cth. BNI VA / BCA VA
+                </div>
+                <div className="card-text">
+                  4. Masukkan nomor virtual account
+                </div>
+                <div className="card-text">5. Klik Inquire</div>
+                <div className="card-text">6. Klik Pay</div>
+              </div>
+            </div>
+          </div>
+          <div className="col-sm-4 col-lg-2 col-md-2"></div>
         </div>
       </div>
       <Footer />

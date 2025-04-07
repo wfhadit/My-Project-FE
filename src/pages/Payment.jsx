@@ -4,8 +4,10 @@ import Navbar from "../components/Navbar";
 import { api } from "../api/axios";
 import { CountdownTimer } from "../countdown/countdown";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hoc/auth-provider";
 
 const Payment = () => {
+  const { fetchData } = useAuth();
   const nav = useNavigate();
   const [order, setOrder] = useState({});
   const fetchOrder = async () => {
@@ -19,6 +21,7 @@ const Payment = () => {
 
   useEffect(() => {
     fetchOrder();
+    fetchData();
   }, []);
 
   return (

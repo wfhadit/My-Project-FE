@@ -3,7 +3,9 @@ import Navbar from "../components/Navbar";
 import { MdOutlineDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 const Cart = () => {
+  const [loading, setLoading] = useState(false);
   const cartSelector = useSelector((state) => state.cart);
   const nav = useNavigate();
 
@@ -86,9 +88,28 @@ const Cart = () => {
                 <hr />
                 <button
                   className="btn btn-danger"
-                  onClick={() => nav("/checkout")}
+                  disabled={loading}
+                  onClick={() => {
+                    setLoading(true);
+                    setTimeout(() => {
+                      setLoading(false);
+                      nav("/checkout");
+                    }, 1000);
+                  }}
                 >
-                  Beli Sekarang
+                  {loading ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm"
+                        aria-hidden="true"
+                      ></span>
+                      <span role="status" className="ms-2">
+                        Loading...
+                      </span>
+                    </>
+                  ) : (
+                    "Beli Sekarang"
+                  )}
                 </button>
               </div>
             </div>

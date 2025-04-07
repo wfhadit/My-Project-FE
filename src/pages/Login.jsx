@@ -28,6 +28,7 @@ const Login = () => {
     onSubmit: async (values) => {
       const result = await dispatch(UserLogin(values));
       setToastMessage(result.message);
+      showToast();
       if (result.status === constant.success) {
         setTimeout(() => {
           navigate("/");
@@ -83,7 +84,6 @@ const Login = () => {
                   setTimeout(() => {
                     setLoading(false);
                   }, 1000);
-                  showToast();
                 }}
               >
                 {loading ? (

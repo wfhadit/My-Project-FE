@@ -23,6 +23,12 @@ const Payment = () => {
     fetchOrder();
     fetchData();
   }, []);
+  useEffect(() => {
+    const allowPayment = sessionStorage.getItem("allowPayment");
+    if (!allowPayment) {
+      nav("/checkout");
+    }
+  }, []);
 
   return (
     <>
@@ -72,14 +78,20 @@ const Payment = () => {
                 <button
                   className="btn btn-outline-danger me-2 mb-2"
                   style={{ height: 40, width: 250 }}
-                  onClick={() => nav("/history")}
+                  onClick={() => {
+                    sessionStorage.removeItem("allowPayment");
+                    nav("/history");
+                  }}
                 >
                   Cek Status Pembayaran
                 </button>
                 <button
                   className="btn btn-danger mb-2"
                   style={{ width: 250, height: 40 }}
-                  onClick={() => nav("/search")}
+                  onClick={() => {
+                    sessionStorage.removeItem("allowPayment");
+                    nav("/search");
+                  }}
                 >
                   Belanja Lagi
                 </button>

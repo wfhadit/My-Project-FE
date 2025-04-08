@@ -61,6 +61,14 @@ const Checkout = () => {
       }),
     }));
   }, [cartSelector]);
+  useEffect(() => {
+    const allowCheckout = sessionStorage.getItem("allowCheckout");
+    if (!allowCheckout) {
+      nav("/cart");
+    } else {
+      sessionStorage.removeItem("allowCheckout");
+    }
+  }, []);
   return (
     <>
       <Navbar />
@@ -165,6 +173,7 @@ const Checkout = () => {
                     disabled={loading}
                     onClick={() => {
                       setLoading(true);
+                      sessionStorage.setItem("allowPayment", "true");
                       formik.handleSubmit();
                       setTimeout(() => {
                         setLoading(false);

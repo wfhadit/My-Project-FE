@@ -45,7 +45,7 @@ const Register = () => {
         }, 1000);
         return res.data.message;
       } catch (err) {
-        setToastMessage("Invalid input data");
+        setToastMessage(err.response.data.message);
         showToast();
         return err.response.data;
       }

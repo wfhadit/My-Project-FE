@@ -8,50 +8,28 @@ import Product from "../pages/Product";
 import Profile from "../pages/Profile";
 import Register from "../pages/Register";
 import Search from "../pages/Search";
+import { ProtectedPage } from "./protected-page";
 
+class RouteClass {
+  constructor(path, element, needLogin = false, guestOnly = false) {
+    this.path = path;
+    this.element = (
+      <ProtectedPage needLogin={needLogin} guestOnly={guestOnly}>
+        {element}
+      </ProtectedPage>
+    );
+  }
+}
 export const routes = [
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/search",
-    element: <Search />,
-  },
-  {
-    path: "/product/:productID",
-    element: <Product />,
-  },
-  {
-    path: "/cart",
-    element: <Cart />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-  },
-  {
-    path: "/checkout",
-    element: <Checkout />,
-  },
-  {
-    path: "/payment",
-    element: <Payment />,
-  },
-  {
-    path: "/history",
-    element: <History />,
-  },
-  {
-    path: "*",
-    element: <Home />,
-  },
+  new RouteClass("/", <Home />),
+  new RouteClass("/login", <Login />, false, true),
+  new RouteClass("/register", <Register />, false, true),
+  new RouteClass("/search", <Search />),
+  new RouteClass("/product/:productID", <Product />),
+  new RouteClass("/cart", <Cart />, true, false),
+  new RouteClass("/profile", <Profile />, true, false),
+  new RouteClass("/checkout", <Checkout />, true, false),
+  new RouteClass("/payment", <Payment />, true, false),
+  new RouteClass("/history", <History />, true, false),
+  new RouteClass("*", <Home />),
 ];

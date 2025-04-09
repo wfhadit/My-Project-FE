@@ -174,11 +174,24 @@ const Checkout = () => {
                     onClick={() => {
                       setLoading(true);
                       sessionStorage.setItem("allowPayment", "true");
-                      formik.handleSubmit();
-                      setTimeout(() => {
-                        setLoading(false);
-                        nav("/payment");
-                      }, 1000);
+
+                      if (!userSelector.alamat || !userSelector.nomor_hp) {
+                        const modal = new window.bootstrap.Modal(
+                          document.getElementById("exampleModalToggle")
+                        );
+                        modal.show();
+                        setTimeout(() => {
+                          setLoading(false);
+                          modal.hide();
+                          nav("/profile");
+                        }, 3000);
+                      } else {
+                        formik.handleSubmit();
+                        setTimeout(() => {
+                          setLoading(false);
+                          nav("/payment");
+                        }, 1000);
+                      }
                     }}
                   >
                     {loading ? (
@@ -197,6 +210,35 @@ const Checkout = () => {
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="modal fade"
+        id="exampleModalToggle"
+        aria-hidden="true"
+        aria-labelledby="exampleModalToggleLabel"
+        tabIndex="-1"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalToggleLabel">
+                Message
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <h4 className="text-danger">
+                Please fill in your personal data first, make sure your address
+                and cellphone number are valid
+              </h4>
             </div>
           </div>
         </div>

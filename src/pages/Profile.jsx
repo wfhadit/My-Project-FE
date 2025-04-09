@@ -192,7 +192,7 @@ const Profile = () => {
                               type="date"
                               className="form-control"
                               id="ubahtanggal"
-                              defaultValue={formik.values.tanggal_lahir}
+                              value={formik.values.tanggal_lahir || ""}
                               onChange={(e) =>
                                 formik.setFieldValue(
                                   "tanggal_lahir",

@@ -59,7 +59,7 @@ const Payment = () => {
             <div className="card ">
               <div className="card-body">
                 <div className="card-title text-start">
-                  {order.payment_method?.toUpperCase()} Virtual Account
+                  {order?.payment_method?.toUpperCase()} Virtual Account
                 </div>
                 <hr />
                 <div className="card-text text-start d-flex">
@@ -71,7 +71,7 @@ const Payment = () => {
                   Total Tagihan
                   <span className="ms-auto">
                     Rp{" "}
-                    {new Intl.NumberFormat("id-ID").format(order.total_price)}
+                    {new Intl.NumberFormat("id-ID").format(order?.total_price)}
                   </span>
                 </div>
                 <hr />
@@ -133,6 +133,7 @@ const Payment = () => {
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );

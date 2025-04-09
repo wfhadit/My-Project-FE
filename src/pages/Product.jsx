@@ -29,8 +29,8 @@ const Product = () => {
       product_nama: "",
       product_image: "",
       product_price: 0,
-      quantity: 0,
       stock: 0,
+      quantity: 0,
     },
     onSubmit: async (values) => {
       try {
@@ -55,8 +55,8 @@ const Product = () => {
       product_nama: product.nama,
       product_image: product.image,
       product_price: product.price,
-      quantity: count,
       stock: product.amount,
+      quantity: count,
     });
   }, [product, count]);
   useEffect(() => {

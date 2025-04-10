@@ -3,10 +3,11 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { api } from "../api/axios";
 import { CountdownTimer } from "../countdown/countdown";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hoc/auth-provider";
 
 const Payment = () => {
+  const location = useLocation();
   const { fetchData } = useAuth();
   const nav = useNavigate();
   const [order, setOrder] = useState({});
@@ -22,7 +23,7 @@ const Payment = () => {
   useEffect(() => {
     fetchOrder();
     fetchData();
-  }, []);
+  }, [location.pathname]);
   useEffect(() => {
     const allowPayment = sessionStorage.getItem("allowPayment");
     if (!allowPayment) {

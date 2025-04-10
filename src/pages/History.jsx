@@ -1,11 +1,19 @@
 import { useSelector } from "react-redux";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../hoc/auth-provider";
+import { useLocation } from "react-router-dom";
 
 export const History = () => {
+  const location = useLocation();
+  const { fetchData } = useAuth();
   const orderSelector = useSelector((state) => state.order);
   const [show, setShow] = useState(null);
+
+  useEffect(() => {
+    fetchData();
+  }, [location.pathname]);
 
   return (
     <>

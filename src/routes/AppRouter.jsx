@@ -29,7 +29,7 @@ export const routes = [
   new RouteClass("/cart", <Cart />, true, false),
   new RouteClass("/profile", <Profile />, true, false),
   new RouteClass("/checkout", <Checkout />, true, false),
-  new RouteClass("/payment", <Payment />, true, false),
-  new RouteClass("/history", <History />, true, false),
+  new RouteClass("/payment", <Payment key={location.pathname} />, true, false),
+  new RouteClass("/history", <History key={location.pathname} />, true, false),
   new RouteClass("*", <Home />),
 ];

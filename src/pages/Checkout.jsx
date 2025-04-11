@@ -190,7 +190,7 @@ const Checkout = () => {
                         setTimeout(() => {
                           setLoading(false);
                           nav("/payment");
-                        }, 1000);
+                        }, 2000);
                       }
                     }}
                   >
